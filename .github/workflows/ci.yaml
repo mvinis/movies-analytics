@@ -50,7 +50,7 @@ jobs:
 
           # 3. Aguarda os dois (agora aceitando 200 ou 404)
           # O parâmetro --httpStatusCode 200,404 é o "pulo do gato"
-          npx wait-on http://localhost:8000 http://localhost:5173 -t 120000 --httpStatusCode 200,404
+          npx wait-on http://localhost:8000 http://localhost:5173 -t 120000 --httpStatusCode 200,404,405
 
           # 4. Executa os testes
           python -m pytest
