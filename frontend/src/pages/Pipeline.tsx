@@ -19,10 +19,12 @@ export function Pipeline() {
   const [showModal, setShowModal] = useState(false);
   const itemsPerPage = 10;
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
   // 1. Função de busca de logs (Histórico)
   const fetchLogs = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/pipeline/logs");
+      const res = await fetch(`${API_BASE_URL}/api/pipeline/logs`);
       if (!res.ok) throw new Error("Erro na resposta da API");
       const data = await res.json();
       setExecutionLogs(Array.isArray(data) ? data : []);
