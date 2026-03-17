@@ -16,6 +16,7 @@ __pycache__/
 # Dados e Logs (Não queremos subir gigabytes de dados)
 data/raw/*.json
 data/processed/*.parquet
+data/processed/*.json
 logs/*.log
 
 # Node/React
