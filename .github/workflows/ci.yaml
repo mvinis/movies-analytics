@@ -13,21 +13,46 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # --- AMBIENTE PYTHON ---
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          playwright install chromium --with-deps
 
-      - name: Lint with flake8 (Opcional - Qualidade de código)
+      # --- AMBIENTE NODE/REACT ---
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Frontend dependencies
+        run: npm install
+
+      # --- ORQUESTRAÇÃO DE SERVIDORES EM BACKGROUND ---
+      - name: Start Servers (Backend & Frontend)
         run: |
-          pip install flake8
-          flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Sobe o FastAPI em background
+          python -m uvicorn src.api:app --host 0.0.0.0 --port 8000 &
 
+          # Sobe o React em background
+          npm run dev -- --port 5173 &
+
+          # Aguarda os servidores ficarem prontos (timeout de 60s)
+          npx wait-on http://localhost:5173 http://localhost:8000 -t 60000
+
+      # --- EXECUÇÃO DOS TESTES ---
+      - name: Run All Tests
+        run: |
+          # Agora que tudo está rodando, o pytest vai encontrar o localhost:5173
+          python -m pytest
+
+      # --- VALIDAÇÃO DE DOCKER ---
       - name: Test Docker Build (Backend)
         run: docker build -t movie-backend -f backend.Dockerfile .
 

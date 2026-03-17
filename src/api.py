@@ -188,7 +188,9 @@ async def get_ai_insights():
 def get_movies():
     if not os.path.exists(PARQUET_PATH): return []
     df = pd.read_parquet(PARQUET_PATH)
-    return json.loads(df.to_json(orient='records'))
+    
+    # Padronização da data
+    return json.loads(df.to_json(orient='records', date_format='iso'))
 
 @app.post("/api/pipeline/run")
 async def run_pipeline_task():
@@ -196,7 +198,7 @@ async def run_pipeline_task():
         current_dir = os.path.dirname(os.path.abspath(__file__))
         pipeline_path = os.path.join(current_dir, 'run_pipeline.py')
 
-        # Iniciamos o processo
+        # Inicia o processo
         process = subprocess.Popen(
             [sys.executable, pipeline_path],
             stdout=subprocess.PIPE,
@@ -206,10 +208,10 @@ async def run_pipeline_task():
             errors='ignore'
         )
 
-        # Lemos a saída linha por linha
+        # Leitura da saída linha por linha
         for line in iter(process.stdout.readline, ""):
             if line:
-                # Enviamos a linha para o front
+                # Envia a linha para o front
                 # Formato: "data: Mensagem aqui\n\n" (padrão SSE)
                 yield f"data: {line.strip()}\n\n"
         

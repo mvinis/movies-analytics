@@ -9,6 +9,10 @@ venv/
 .venv/
 .env
 
+# Pytest
+__pycache__/
+.pytest_cache/
+
 # Dados e Logs (Não queremos subir gigabytes de dados)
 data/raw/*.json
 data/processed/*.parquet

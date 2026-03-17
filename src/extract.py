@@ -22,45 +22,35 @@ load_dotenv()
 TOKEN = os.getenv('TMDB_API_TOKEN')
 
 def fetch_popular_movies(total_movies_target=1000):
-    """
-    Busca filmes até atingir a meta definida.
-    """
     all_movies = []
     headers = {"accept": "application/json", "Authorization": f"Bearer {TOKEN}"}
     
-    # Cada página tem 20, então calculamos quantas páginas precisamos
     pages_to_fetch = (total_movies_target // 20) + (1 if total_movies_target % 20 > 0 else 0)
-    
     logger.info(f"🎯 Meta: {total_movies_target} filmes. Calculado: {pages_to_fetch} páginas.")
 
     for page in range(1, pages_to_fetch + 1):
-        # O TMDB limita a 500 páginas em endpoints de listagem
-        if page > 500:
-            logger.warning("⚠️ Limite máximo de 500 páginas atingido (limitação da API TMDB).")
-            break
-
-        url = f"https://api.themoviedb.org/3/movie/popular?language=pt-BR&page={page}"
+        success = False
+        retries = 0
         
-        try:
-            response = requests.get(url, headers=headers)
-            if response.status_code == 429: # Too Many Requests
-                logger.warning("⏳ Rate limit atingido. Aguardando 5 segundos...")
-                time.sleep(5)
-                continue
+        while not success and retries < 3:
+            url = f"https://api.themoviedb.org/3/movie/popular?language=pt-BR&page={page}"
+            try:
+                response = requests.get(url, headers=headers)
                 
-            response.raise_for_status()
-            data = response.json()
-            
-            all_movies.extend(data.get('results', []))
-            
-            if page % 5 == 0: # Log a cada 5 páginas para não encher a tela
-                logger.info(f"📊 Progresso: {len(all_movies)} / {total_movies_target} filmes coletados...")
-            
-            time.sleep(0.1) # Delay sutil
-            
-        except Exception as e:
-            logger.error(f"❌ Falha na página {page}: {e}")
-            break
+                if response.status_code == 429:
+                    logger.warning(f"⏳ Rate limit na página {page}. Tentativa {retries+1}. Aguardando...")
+                    time.sleep(5)
+                    retries += 1
+                    continue
+                    
+                response.raise_for_status()
+                data = response.json()
+                all_movies.extend(data.get('results', []))
+                success = True 
+                
+            except Exception as e:
+                logger.error(f"❌ Falha na página {page}: {e}")
+                break # Sai do while e vai para a próxima página do for
 
     return {"results": all_movies[:total_movies_target]}
 
@@ -78,7 +68,7 @@ if __name__ == "__main__":
         if not TOKEN:
             raise ValueError("Token da API não encontrado no arquivo .env!")
         
-        # Aqui definimos quantas páginas queremos (ex: 5 páginas = 100 filmes)
+        # Aqui define quantas páginas são desejadas (ex: 5 páginas = 100 filmes)
         movies_consolidated = fetch_popular_movies(total_movies_target=1000)
         
         if movies_consolidated["results"]:
