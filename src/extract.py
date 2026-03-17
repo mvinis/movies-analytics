@@ -19,6 +19,8 @@ if not logger.handlers:
 logger.setLevel(logging.INFO)
 
 load_dotenv()
+
+# Tenta pegar do .env OU do sistema (GitHub Actions)
 TOKEN = os.getenv('TMDB_API_TOKEN')
 
 def fetch_popular_movies(total_movies_target=1000):
@@ -65,8 +67,10 @@ def save_raw_data(data, filename="movies_raw.json"):
 if __name__ == "__main__":
     try:
         logger.info("🎬 Iniciando pipeline de extração massiva...")
-        if not TOKEN:
-            raise ValueError("Token da API não encontrado no arquivo .env!")
+        
+        if not TOKEN or TOKEN == "":
+            logger.error("❌ TOKEN não encontrado no .env nem no ambiente!")
+            raise ValueError("Token da API não encontrado!")
         
         # Aqui define quantas páginas são desejadas (ex: 5 páginas = 100 filmes)
         movies_consolidated = fetch_popular_movies(total_movies_target=1000)

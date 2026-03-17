@@ -32,8 +32,7 @@ logger = logging.getLogger("Pipeline")
 
 def generate_metadata(status="Sucesso", details="Pipeline concluído."):
     """Atualiza o histórico e limpa o cache da IA."""
-    # O print com flush=True é o que o Dashboard lê em tempo real!
-    print("FINALIZANDO: Gravando metadados e atualizando dashboard...", flush=True)
+    logging.info("FINALIZANDO: Gravando metadados e atualizando dashboard...", flush=True)
     
     history = []
     if os.path.exists(METADATA_PATH):
@@ -68,7 +67,7 @@ def generate_metadata(status="Sucesso", details="Pipeline concluído."):
         
 def run_step(script_name, display_name):
     # Avisa ao Dashboard qual etapa está começando
-    print(f"{display_name.upper()}: Executando script {script_name}...", flush=True)
+    logging.info(f"{display_name.upper()}: Executando script {script_name}...", flush=True)
     
     script_path = os.path.join(BASE_DIR, script_name)
     
@@ -99,13 +98,14 @@ if __name__ == "__main__":
         
         if success_transform:
             generate_metadata(status="Sucesso", details="Pipeline concluído.")
-            print("PRONTO: Todos os dados foram atualizados com sucesso!", flush=True)
+            logging.info("PRONTO: Todos os dados foram atualizados com sucesso!", flush=True)
         else:
             generate_metadata(status="Falha", details=f"Erro no Transform: {msg_transform}")
-            print(f"ERRO: Falha na transformação - {msg_transform}", flush=True)
+            logging.error(f"ERRO: Falha na transformação - {msg_transform}", flush=True)
     else:
         generate_metadata(status="Falha", details=f"Erro no Extract: {msg_extract}")
-        print(f"ERRO: Falha na extração - {msg_extract}", flush=True)
+        logging.error(f"ERRO: Falha na extração - {msg_extract}", flush=True)
+        sys.exit(1)
 
     # Mensagem final para o streaming fechar
-    print("FINISHED", flush=True)
+    logging.info("FINISHED", flush=True)
