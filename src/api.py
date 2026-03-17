@@ -49,6 +49,10 @@ MODEL_GROQ = "llama-3.3-70b-versatile"
 
 app = FastAPI(title="Movie Intelligence API")
 
+@app.get("/")
+async def health_check():
+    return {"status": "online", "message": "API is ready for testing"}
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
