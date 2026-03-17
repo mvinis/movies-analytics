@@ -33,6 +33,7 @@ jobs:
 
       - name: Install Frontend dependencies
         run: npm install
+        working-directory: ./frontend
 
       # --- ORQUESTRAÇÃO DE SERVIDORES EM BACKGROUND ---
       - name: Start Servers (Backend & Frontend)
