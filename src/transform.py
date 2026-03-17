@@ -34,13 +34,20 @@ def transform_data(raw_data):
     
     # O TMDB manda os filmes dentro da chave 'results'
     df = pd.DataFrame(raw_data['results'])
+
+    # --- REMOÇÃO DE DUPLICADOS ---
+    initial_count = len(df)
+    df = df.drop_duplicates(subset=['id'], keep='first')
+    
+    duplicates_removed = initial_count - len(df)
+    if duplicates_removed > 0:
+        logger.warning(f"♻️  Remoção de Duplicados: {duplicates_removed} registros repetidos eliminados.")
     
     # 1. TRATAMENTO DE DATAS E FILTRO DE QUALIDADE
-    # Primeiro, removemos quem não tem release_date (os 4 culpados que achamos!)
     initial_count = len(df)
     df = df[df['release_date'].notna() & (df['release_date'] != "")]
     
-    # Agora extraímos o ano com segurança
+    # Extrai o ano com segurança
     df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
     df['release_year'] = df['release_date'].dt.year.fillna(0).astype(int)
 
@@ -53,7 +60,7 @@ def transform_data(raw_data):
     )
     
     # 3. SELEÇÃO DE COLUNAS (Contrato de Dados Gold)
-    # Adicionei 'release_date' na lista
+    # Adiciona 'release_date' na lista
     cols_to_keep = ['id', 'title', 'release_date', 'release_year', 'popularity', 'vote_average', 'poster_url', 'genre_ids']
     df_final = df[cols_to_keep]
     
@@ -64,9 +71,9 @@ def save_processed_data(df, json_name="movies_cleaned.json", parquet_name="movie
     processed_dir = os.path.join(os.path.dirname(__file__), '..', 'data', 'processed')
     os.makedirs(processed_dir, exist_ok=True)
     
-    # Salvando JSON (para o Dashboard React ler fácil)
+    # Salvando JSON
     json_path = os.path.join(processed_dir, json_name)
-    df.to_json(json_path, orient='records', force_ascii=False, indent=4)
+    df.to_json(json_path, orient='records', force_ascii=False, indent=4, date_format='iso')
     
     # Salvando Parquet (para Performance e Big Data)
     parquet_path = os.path.join(processed_dir, parquet_name)
