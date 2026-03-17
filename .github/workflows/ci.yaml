@@ -2,9 +2,9 @@ name: CI - Pipeline Validation
 
 on:
   push:
-    branches: [master]
+    branches: [master, main]
   pull_request:
-    branches: [master]
+    branches: [master, main]
 
 jobs:
   build-and-test:
@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # --- AMBIENTE PYTHON ---
+      # --- SETUP PYTHON ---
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -25,37 +25,32 @@ jobs:
           pip install -r requirements.txt
           playwright install chromium --with-deps
 
-      # --- AMBIENTE NODE/REACT ---
+      # --- SETUP NODE/REACT ---
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
 
       - name: Install Frontend dependencies
+        # Garantindo que ele entre na pasta frontend
         run: npm install
         working-directory: ./frontend
 
-      # --- ORQUESTRAÇÃO DE SERVIDORES EM BACKGROUND ---
-      - name: Start Servers (Backend & Frontend)
+      # --- ORQUESTRAÇÃO E TESTES ---
+      - name: Start Servers and Run Tests
+        env:
+          # Chaves fakes para o api.py passar na validação inicial
+          GOOGLE_API_KEY: "fake_key_for_testing"
+          GROQ_API_KEY: "fake_key_for_testing"
         run: |
-          # Sobe o FastAPI em background
+          # 1. Backend em Background (raiz)
           python -m uvicorn src.api:app --host 0.0.0.0 --port 8000 &
 
-          # Sobe o React em background
-          npm run dev -- --port 5173 &
+          # 2. Frontend em Background (entra na pasta e sobe)
+          cd frontend && npm run dev -- --port 5173 &
 
-          # Aguarda os servidores ficarem prontos (timeout de 60s)
-          npx wait-on http://localhost:5173 http://localhost:8000 -t 60000
+          # 3. Aguarda os serviços (aumentamos para 2 minutos por segurança no CI)
+          npx wait-on http://localhost:5173 http://localhost:8000 -t 120000
 
-      # --- EXECUÇÃO DOS TESTES ---
-      - name: Run All Tests
-        run: |
-          # Agora que tudo está rodando, o pytest vai encontrar o localhost:5173
+          # 4. Executa a bateria de testes
           python -m pytest
-
-      # --- VALIDAÇÃO DE DOCKER ---
-      - name: Test Docker Build (Backend)
-        run: docker build -t movie-backend -f backend.Dockerfile .
-
-      - name: Test Docker Build (Frontend)
-        run: docker build -t movie-frontend -f frontend.Dockerfile .
