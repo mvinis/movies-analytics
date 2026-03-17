@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  # Serviço da API e Scripts Python
+  backend:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TMDB_API_KEY=${TMDB_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+
+  # Serviço do Dashboard React
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+    env_file: .env
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

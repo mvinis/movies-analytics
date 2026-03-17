@@ -1,0 +1,277 @@
+/* Atualize o topo do seu arquivo index.css */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif; /* Define Poppins para tudo */
+}
+
+body {
+  background-color: #1b1b1b;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Garante que títulos e botões também sigam a regra */
+h1,
+h2,
+h3,
+h4,
+button,
+span,
+p {
+  font-family: "Poppins", sans-serif;
+}
+/* Container padrão para centralizar todas as páginas do Dashboard */
+.page-container {
+  padding: 32px 40px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+/* Container da fileira horizontal */
+.dynamic-row {
+  display: flex;
+  height: 340px;
+  gap: 16px;
+  width: 100%;
+}
+
+/* O card base, estreito e contendo apenas a imagem */
+.dynamic-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  /* O "flex" é quem faz a mágica de encolher e esticar suavemente */
+  transition: flex 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  flex: 1;
+  display: flex;
+  background-color: #ffd84d;
+}
+
+/* O card selecionado fica muito mais largo */
+.dynamic-card.active {
+  flex: 4;
+  cursor: default;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* A imagem dentro do card */
+.dynamic-card img {
+  height: 100%;
+  width: 220px; /* Trava a largura do pôster para ele não esticar */
+  object-fit: cover;
+  transition: filter 0.3s ease;
+  filter: grayscale(40%) brightness(0.6); /* Deixa os não-selecionados um pouco escuros */
+}
+
+.dynamic-card.active img {
+  filter: grayscale(0%) brightness(1); /* Pôster original no selecionado */
+}
+
+.dynamic-card:hover:not(.active) img {
+  filter: grayscale(0%) brightness(0.8);
+}
+
+/* As informações do filme (ocultas por padrão) */
+.dynamic-info {
+  padding: 32px;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease 0s;
+}
+
+/* Quando o card está ativo, a informação aparece com um pequeno atraso (para dar tempo de esticar) */
+.dynamic-card.active .dynamic-info {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease 0.3s;
+}
+
+/* Estilo para os cards do Catálogo Completo */
+.movie-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #111827;
+  cursor: pointer; /* Adiciona a mãozinha ao passar o mouse */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Transição suave com "bounce" */
+}
+
+/* Efeito de vir para frente (Zoom) */
+.movie-card:hover {
+  transform: scale(1.05) translateY(-5px); /* Aumenta 5% e sobe um pouquinho */
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Sombra mais forte para parecer que flutua */
+  z-index: 5;
+}
+
+/* Garante que a imagem dentro do card também acompanhe a suavidade */
+.movie-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter 0.3s ease;
+}
+
+/* Opcional: clarear um pouco a imagem no hover */
+.movie-card:hover img {
+  filter: brightness(1.1);
+}
+
+.movie-data-row {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espaço inicial */
+  padding: 10px 12px;
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background-color: transparent;
+}
+
+/* Efeito de empurrar os vizinhos (cima/baixo) e destacar o card */
+.movie-data-row:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 24px 12px; /* Empurra os cards de cima e de baixo */
+  transform: translateX(10px);
+}
+
+.poster-wrapper {
+  transition: all 0.4s ease;
+  flex-shrink: 0; /* Garante que a caixa da imagem não esmague */
+}
+
+/* Quando passamos o mouse no card, a caixa da imagem ganha margem */
+.movie-data-row:hover .poster-wrapper {
+  margin-right: 25px; /* EMPURRA o título e a barra para a direita */
+}
+
+.mini-poster-chart {
+  width: 45px;
+  height: 65px;
+  border-radius: 6px;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s ease;
+  display: block;
+}
+
+/* A capa "Vem para frente" (Zoom) */
+.movie-data-row:hover .mini-poster-chart {
+  transform: scale(1.8);
+  box-shadow: 0 10px 30px rgba(255, 216, 77, 0.4);
+}
+
+/* index.css */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* O segredo para remover o espaço lateral */
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+* {
+  box-sizing: border-box; /* Garante que padding não aumente o tamanho dos elementos */
+}
+
+/* Layout padrão (Desktop): Horizontal */
+.dynamic-row {
+  display: flex;
+  height: 400px; /* Ou a altura que você já definiu */
+  gap: 10px;
+  width: 100%;
+}
+
+/* Layout Mobile: Vertical */
+@media (max-width: 768px) {
+  .dynamic-row {
+    flex-direction: column; /* Coloca um embaixo do outro */
+    height: auto; /* Permite que o container cresça verticalmente */
+    gap: 16px;
+  }
+
+  .dynamic-card {
+    width: 100% !important; /* Ocupa a largura total */
+    height: 150px; /* Altura fixa para os cards fechados no mobile */
+    flex: none !important; /* Desativa o flex-grow do modo expansível */
+  }
+
+  .dynamic-card.active {
+    height: 350px; /* Altura do card quando estiver aberto no mobile */
+  }
+}
+/* CONTAINER PAI */
+.dynamic-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+/* --- ESTRATÉGIA MOBILE (Grid de 2 colunas) --- */
+@media (max-width: 768px) {
+  .dynamic-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 cards por linha */
+    height: auto !important; /* Libera a altura fixa */
+  }
+
+  .dynamic-card {
+    height: 220px !important; /* Altura ideal para mobile */
+    flex: none !important;
+    width: 100% !important;
+    border-radius: 8px;
+  }
+
+  /* No mobile, as informações ficam sempre visíveis mas simplificadas */
+  .dynamic-info {
+    opacity: 1 !important;
+    padding: 10px !important;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9)) !important;
+  }
+
+  .dynamic-info h2 {
+    font-size: 16px !important; /* Título menor para não quebrar */
+  }
+
+  .dynamic-info p,
+  .dynamic-info button {
+    display: none; /* Esconde detalhes extras no card do grid mobile */
+  }
+}
+
+/* --- ESTRATÉGIA DESKTOP (Efeito Expansível) --- */
+@media (min-width: 769px) {
+  .dynamic-row {
+    flex-direction: row;
+    height: 400px;
+  }
+
+  .dynamic-card {
+    position: relative;
+    flex: 0.5;
+    transition: all 0.6s cubic-bezier(0.2, 1, 0.22, 1);
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .dynamic-card.active {
+    flex: 4; /* O card ativo expande */
+  }
+
+  .dynamic-card:not(.active) .dynamic-info {
+    opacity: 0; /* Esconde info dos cards fechados */
+  }
+}

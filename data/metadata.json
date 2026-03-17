@@ -1,0 +1,143 @@
+[
+    {
+        "last_execution": "2026-03-16 20:51:01",
+        "rows_processed": 997,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": null
+    },
+    {
+        "last_execution": "2026-03-16 16:04:18",
+        "rows_processed": 998,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": {
+            "correlation": "Os 19 filmes de elite apresentam uma correlação direta com o sucesso de bilheteria e aclamação da crítica, indicando um padrão de qualidade e apelo ao público.",
+            "trend": "O ano de 2025 apresenta uma tendência de aumento na produtividade cinematográfica, sugerindo um investimento crescente na indústria e um interesse renovado do público por novos lançamentos.",
+            "quality": "A qualidade média de 6.44 indica que a maioria dos filmes apresenta um padrão razoável, mas há espaço para melhoria e diferenciação no mercado, especialmente entre os títulos de elite.",
+            "market": "O mês de outubro parece ser estrategicamente escolhido para lançamentos, possivelmente devido a uma combinação de fatores como menor concorrência, proximidade com a temporada de premiações e uma audiência mais receptiva a novos lançamentos.",
+            "provider": "GROQ (LLAMA 3.3)"
+        }
+    },
+    {
+        "last_execution": "2026-03-16 16:00:59",
+        "rows_processed": 998,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": null
+    },
+    {
+        "last_execution": "2026-03-16 15:58:13",
+        "rows_processed": 998,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": null
+    },
+    {
+        "last_execution": "2026-03-16 15:53:26",
+        "rows_processed": 998,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": {
+            "correlation": "Os 19 filmes de elite apresentam uma forte correlação entre orçamento e bilheteria, o que sugere que investimentos maiores tendem a resultar em maiores retornos.",
+            "trend": "O ano de 2025 apresenta um crescimento significativo na produtividade, com um aumento nos lançamentos de filmes de alta qualidade e inovação, o que pode indicar uma mudança no mercado cinematográfico.",
+            "quality": "A qualidade média de 6,45 sugere que a maioria dos filmes está atingindo um padrão de mediocridade, com poucos filmes se destacando como excepcionais ou ruins.",
+            "market": "O mês de outubro apresenta uma estratégia de lançamento bem definida, com filmes sendo lançados em um padrão de alta frequência, o que pode ajudar a atrair uma audiência fiel e manter a competitividade no mercado.",
+            "provider": "GROQ (LLAMA 3.3)"
+        }
+    },
+    {
+        "last_execution": "2026-03-16 15:49:51",
+        "rows_processed": 998,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": {
+            "correlation": "A presença de 19 filmes de elite sugere um padrão de sucesso elevado, possivelmente influenciado por fatores como direção, atuação, roteiro e produção de alta qualidade.",
+            "trend": "O ano de 2025 destaca-se como um período de pico, indicando um aumento significativo na produção ou lançamento de filmes de alto nível, possivelmente devido a investimentos crescentes no setor cinematográfico.",
+            "quality": "A média de qualidade de 6.45 sugere que os filmes apresentam uma boa qualidade geral, mas ainda há espaço para melhoria, indicando que os produtores podem buscar aprimorar aspectos específicos para alcançar um nível de excelência.",
+            "market": "A estratégia de lançamento em outubro sugere que os estúdios estão aproveitando a temporada de festivais de cinema e a proximidade com a temporada de prêmios para promover seus filmes, visando maximizar o reconhecimento e o impacto nas bilheterias.",
+            "provider": "GROQ (LLAMA 3.3)"
+        }
+    },
+    {
+        "last_execution": "2026-03-16 15:46:48",
+        "rows_processed": 998,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": null
+    },
+    {
+        "last_execution": "2026-03-16 15:42:30",
+        "rows_processed": 998,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": {
+            "correlation": "Os 19 filmes de elite apresentam uma correlação positiva entre orçamento e bilheteria, indicando que investimentos mais altos estão associados a um maior sucesso de bilheteria.",
+            "trend": "O ano de 2025 apresenta um aumento significativo na produtividade, com lançamentos mais frequentes e diversificados, sugerindo uma estratégia de expansão do mercado.",
+            "quality": "A qualidade média de 6.45 sugere que os filmes estão sendo bem recebidos pelo público e pela crítica, com uma tendência de melhoria na produção e direção.",
+            "market": "O mês 10 parece ser um período estratégico para lançamentos, com uma concentração de estreias de filmes de elite e uma possível tentativa de aproveitar o feriado de fim de ano para atrair um público mais amplo.",
+            "provider": "GROQ (LLAMA 3.3)"
+        }
+    },
+    {
+        "last_execution": "2026-03-16 15:34:26",
+        "rows_processed": 998,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": null
+    },
+    {
+        "last_execution": "2026-03-16 15:24:50",
+        "rows_processed": 997,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": {
+            "correlation": "Os filmes de elite apresentam um padrão de sucesso, comprovando a eficácia da seleção de projetos e do investimento na indústria cinematográfica.",
+            "trend": "O ano de 2025 sinaliza uma tendência de crescimento na produtividade, indicando uma possível expansão do setor em anos subsequentes.",
+            "quality": "A média de 6.43 sugere uma boa qualidade geral dos filmes, evidenciando um equilíbrio entre a criatividade e a técnica.",
+            "market": "O lançamento em Dezembro estrategicamente aproveita a temporada de festas e férias, aumentando a visibilidade e o potencial de bilheteria dos filmes.",
+            "provider": "GROQ (LLAMA 3.3)"
+        }
+    },
+    {
+        "last_execution": "2026-03-16 15:19:02",
+        "rows_processed": 997,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": null
+    },
+    {
+        "last_execution": "2026-03-16 15:18:10",
+        "rows_processed": 997,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": null
+    },
+    {
+        "last_execution": "2026-03-16 15:15:51",
+        "rows_processed": 997,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": null
+    },
+    {
+        "last_execution": "2026-03-16 15:14:00",
+        "rows_processed": 997,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": null
+    },
+    {
+        "last_execution": "2026-03-16 15:09:28",
+        "rows_processed": 997,
+        "status": "Sucesso",
+        "details": "Pipeline concluído.",
+        "ai_insights": {
+            "correlation": "Os 19 filmes de elite apresentam uma correlação significativa entre o sucesso de crítica e comercial, sugerindo que a qualidade artística está diretamente relacionada ao desempenho de bilheteria.",
+            "trend": "O ano de 2025 apresentou um aumento notável na produtividade cinematográfica, com uma diversidade de gêneros e estilos que atraíram diferentes públicos e contribuíram para o crescimento do setor.",
+            "quality": "A qualidade média de 6.45 indica que a maior parte dos filmes lançados apresentam uma boa mistura de elementos técnicos, narrativos e artísticos, mas ainda há espaço para melhorias e inovações que possam elevar essa média.",
+            "market": "A estratégia de lançamento em outubro parece ser favorável, pois coincide com a temporada de festivais de cinema e o início da corrida para premiações anuais, o que pode trazer mais visibilidade e reconhecimento para os filmes lançados nesse período.",
+            "provider": "GROQ (LLAMA 3.3)"
+        }
+    }
+]

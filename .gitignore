@@ -1,0 +1,24 @@
+# Segredos e Chaves
+.env
+*.env
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+.env
+
+# Dados e Logs (Não queremos subir gigabytes de dados)
+data/raw/*.json
+data/processed/*.parquet
+logs/*.log
+
+# Node/React
+node_modules/
+dist/
+build/
+.eslintcache
+
+# Docker
+.dockerignore

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Link para o seu sitemap (opcional por enquanto)
+# Sitemap: https://seusite.com/sitemap.xml
