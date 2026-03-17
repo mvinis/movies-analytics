@@ -36,21 +36,21 @@ jobs:
         run: npm install
         working-directory: ./frontend
 
-      # --- ORQUESTRAÇÃO E TESTES ---
+      # --- ORQUESTRAÇÃO DE SERVIDORES ---
       - name: Start Servers and Run Tests
         env:
-          # Chaves fakes para o api.py passar na validação inicial
           GOOGLE_API_KEY: "fake_key_for_testing"
           GROQ_API_KEY: "fake_key_for_testing"
         run: |
-          # 1. Backend em Background (raiz)
+          # 1. Backend
           python -m uvicorn src.api:app --host 0.0.0.0 --port 8000 &
 
-          # 2. Frontend em Background (entra na pasta e sobe)
+          # 2. Frontend
           cd frontend && npm run dev -- --port 5173 &
 
-          # 3. Aguarda os serviços (aumentamos para 2 minutos por segurança no CI)
-          npx wait-on http://localhost:5173 http://localhost:8000 -t 120000
+          # 3. Aguarda os dois (agora aceitando 200 ou 404)
+          # O parâmetro --httpStatusCode 200,404 é o "pulo do gato"
+          npx wait-on http://localhost:8000 http://localhost:5173 -t 120000 --httpStatusCode 200,404
 
-          # 4. Executa a bateria de testes
+          # 4. Executa os testes
           python -m pytest
