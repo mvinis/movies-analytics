@@ -4,6 +4,7 @@ import { Header } from "./sections/Header";
 import { ProjectOverview } from "./sections/ProjectOverview";
 import { KpiCards } from "./sections/KpiCards";
 import { type Movie } from "./types";
+import { endpoints } from "./api";
 
 // Importação das páginas
 import { Metrics } from "./pages/Metrics";
@@ -150,7 +151,7 @@ export default function App() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 4000);
 
-    fetch("http://127.0.0.1:8000/api/movies", { signal: controller.signal })
+    fetch(endpoints.movies, { signal: controller.signal })
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();

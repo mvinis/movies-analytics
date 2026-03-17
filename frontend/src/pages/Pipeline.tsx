@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { endpoints } from "../api"; // Ajuste o caminho conforme sua estrutura
 
 interface LogEntry {
   id: number;
@@ -24,7 +25,7 @@ export function Pipeline() {
   // 1. Função de busca de logs (Histórico)
   const fetchLogs = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/api/pipeline/logs`);
+      const res = await fetch(endpoints.pipelineLogs);
       if (!res.ok) throw new Error("Erro na resposta da API");
       const data = await res.json();
       setExecutionLogs(Array.isArray(data) ? data : []);
@@ -48,7 +49,7 @@ export function Pipeline() {
 
       const checkInterval = setInterval(async () => {
         try {
-          const res = await fetch("http://127.0.0.1:8000/api/pipeline/logs");
+          const res = await fetch(endpoints.pipelineLogs);
           const data = await res.json();
           const finished = data.some(
             (log: any) =>
@@ -78,7 +79,7 @@ export function Pipeline() {
     localStorage.setItem("pipeline_running", "true");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/pipeline/run", {
+      const response = await fetch(endpoints.runPipeline, {
         method: "POST",
       });
 
