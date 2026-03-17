@@ -36,6 +36,12 @@ jobs:
         run: npm install
         working-directory: ./frontend
 
+      # --- GERAÇÃO DE DADOS PARA O TESTE ---
+      - name: Run Data Pipeline
+        run: python src/run_pipeline.py
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+
       # --- ORQUESTRAÇÃO DE SERVIDORES ---
       - name: Start Servers and Run Tests
         env:
