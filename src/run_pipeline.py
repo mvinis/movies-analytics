@@ -70,24 +70,23 @@ def generate_metadata(status="Sucesso", details="Pipeline concluído."):
         json.dump(history, f, indent=4, ensure_ascii=False)
         
 def run_step(script_name, display_name):
-    """Executa um script Python como um sub-processo."""
+    """Executa um script Python como um sub-processo herdando o ambiente."""
     logger.info(f"{display_name.upper()}: Executando script {script_name}...")
     
     script_path = os.path.join(BASE_DIR, script_name)
-    
-    # Herda as variáveis de ambiente (importante para o TOKEN no GitHub Actions)
+
     result = subprocess.run(
         [sys.executable, script_path], 
         capture_output=True, 
         text=True,
         encoding='utf-8',
-        errors='replace'
+        errors='replace',
+        env=os.environ
     )
     
     if result.returncode == 0:
         return True, "Sucesso"
     else:
-        # Tenta capturar a última linha do erro para um log resumido
         error_raw = result.stderr.strip() if result.stderr else result.stdout.strip()
         short_error = error_raw.splitlines()[-1] if error_raw else "Erro desconhecido"
         logger.error(f"Falha em {script_name}: {error_raw}")

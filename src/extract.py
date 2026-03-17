@@ -21,7 +21,7 @@ logger.setLevel(logging.INFO)
 load_dotenv()
 
 # Tenta pegar do .env OU do sistema (GitHub Actions)
-TOKEN = os.getenv('TMDB_API_TOKEN')
+TOKEN = os.getenv('TMDB_API_KEY')
 
 def fetch_popular_movies(total_movies_target=1000):
     all_movies = []
