@@ -12,6 +12,7 @@ import {
   BarChart,
 } from "recharts";
 import { type Movie } from "../types";
+import { endpoints } from "../api";
 
 interface MetricsProps {
   movies: Movie[];
@@ -67,7 +68,7 @@ export function Metrics({ movies, error }: MetricsProps) {
   // Busca Logs e Última Atualização
   useEffect(() => {
     if (!error) {
-      fetch("http://127.0.0.1:8000/api/pipeline/logs")
+      fetch(endpoints.pipelineLogs)
         .then((res) => res.json())
         .then((data) => {
           if (Array.isArray(data) && data.length > 0) {
@@ -89,7 +90,7 @@ export function Metrics({ movies, error }: MetricsProps) {
   // Busca Insights da IA (Gemini/Groq)
   useEffect(() => {
     setLoadingAi(true);
-    fetch("http://127.0.0.1:8000/api/ai/insights")
+    fetch(endpoints.aiInsights)
       .then((res) => res.json())
       .then((data) => {
         if (data) setAiInsights((prev) => ({ ...prev, ...data }));

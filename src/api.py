@@ -237,4 +237,10 @@ def get_pipeline_logs():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    import os
+    
+    # O Render/Cloud injeta uma variável "PORT". Se não existir, usa 8000.
+    port = int(os.getenv("PORT", 8000))
+    
+    # Usa 0.0.0.0 para que o servidor seja acessível externamente no deploy
+    uvicorn.run(app, host="0.0.0.0", port=port)
