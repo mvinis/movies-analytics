@@ -19,7 +19,7 @@ if not logger.handlers:
 logger.setLevel(logging.INFO)
 
 load_dotenv()
-TOKEN = os.getenv('TMDB_API_TOKEN')
+TOKEN = os.getenv('TMDB_API_KEY')
 
 def fetch_popular_movies(total_movies_target=1000):
     """
