@@ -8,16 +8,20 @@ from datetime import datetime
 
 # 1. Configuração de Caminhos
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = os.path.join(BASE_DIR, '..', 'data')
-LOGS_DIR = os.path.join(BASE_DIR, '..', 'logs')
+DATA_DIR = os.path.normpath(os.path.join(BASE_DIR, '..', 'data'))
+LOGS_DIR = os.path.normpath(os.path.join(BASE_DIR, '..', 'logs'))
 METADATA_PATH = os.path.join(DATA_DIR, 'metadata.json')
 PARQUET_PATH = os.path.join(DATA_DIR, 'processed', 'movies_processed.parquet')
 LOG_FILE = os.path.join(LOGS_DIR, 'pipeline.log')
 
+# Garante que as pastas existam
 os.makedirs(LOGS_DIR, exist_ok=True)
 os.makedirs(os.path.join(DATA_DIR, 'processed'), exist_ok=True)
 
 # 2. Configuração do Logging
+# Forçamos o line_buffering para que o Dashboard receba os logs em tempo real sem precisar de flush=True
+sys.stdout.reconfigure(line_buffering=True)
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
@@ -32,8 +36,7 @@ logger = logging.getLogger("Pipeline")
 
 def generate_metadata(status="Sucesso", details="Pipeline concluído."):
     """Atualiza o histórico e limpa o cache da IA."""
-    # O print com flush=True é o que o Dashboard lê em tempo real!
-    print("FINALIZANDO: Gravando metadados e atualizando dashboard...", flush=True)
+    logger.info("FINALIZANDO: Gravando metadados e atualizando dashboard...")
     
     history = []
     if os.path.exists(METADATA_PATH):
@@ -67,17 +70,18 @@ def generate_metadata(status="Sucesso", details="Pipeline concluído."):
         json.dump(history, f, indent=4, ensure_ascii=False)
         
 def run_step(script_name, display_name):
-    # Avisa ao Dashboard qual etapa está começando
-    print(f"{display_name.upper()}: Executando script {script_name}...", flush=True)
+    """Executa um script Python como um sub-processo herdando o ambiente."""
+    logger.info(f"{display_name.upper()}: Executando script {script_name}...")
     
     script_path = os.path.join(BASE_DIR, script_name)
-    
+
     result = subprocess.run(
         [sys.executable, script_path], 
         capture_output=True, 
         text=True,
         encoding='utf-8',
-        errors='replace'
+        errors='replace',
+        env=os.environ
     )
     
     if result.returncode == 0:
@@ -85,6 +89,7 @@ def run_step(script_name, display_name):
     else:
         error_raw = result.stderr.strip() if result.stderr else result.stdout.strip()
         short_error = error_raw.splitlines()[-1] if error_raw else "Erro desconhecido"
+        logger.error(f"Falha em {script_name}: {error_raw}")
         return False, short_error
 
 if __name__ == "__main__":
@@ -99,13 +104,16 @@ if __name__ == "__main__":
         
         if success_transform:
             generate_metadata(status="Sucesso", details="Pipeline concluído.")
-            print("PRONTO: Todos os dados foram atualizados com sucesso!", flush=True)
+            logger.info("PRONTO: Todos os dados foram atualizados com sucesso!")
         else:
             generate_metadata(status="Falha", details=f"Erro no Transform: {msg_transform}")
-            print(f"ERRO: Falha na transformação - {msg_transform}", flush=True)
+            logger.error(f"ERRO: Falha na transformação - {msg_transform}")
+            sys.exit(1)
     else:
         generate_metadata(status="Falha", details=f"Erro no Extract: {msg_extract}")
-        print(f"ERRO: Falha na extração - {msg_extract}", flush=True)
+        logger.error(f"ERRO: Falha na extração - {msg_extract}")
+        # Interrompe o GitHub Actions aqui para não rodar testes sem dados
+        sys.exit(1)
 
     # Mensagem final para o streaming fechar
-    print("FINISHED", flush=True)
+    logger.info("FINISHED")

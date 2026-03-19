@@ -50,7 +50,7 @@ function OverviewPage({ movies, loading, error }: any) {
 
   if (loading) {
     return (
-      <main className="page-container" style={{ flex: 1 }}>
+      <main className="page-container" id="loading-screen" style={{ flex: 1 }}>
         <ProjectOverview />
         <p
           style={{
@@ -78,7 +78,7 @@ function OverviewPage({ movies, loading, error }: any) {
     <main className="page-container" style={{ flex: 1 }}>
       <ProjectOverview />
       <KpiCards movies={movies} />
-      <div style={containerStyle}>
+      <div id="top-10-popular" style={containerStyle}>
         <h3 style={titleStyle}>Top 10 Filmes Mais Populares</h3>
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           {top10.map((movie) => (
@@ -111,6 +111,7 @@ function OverviewPage({ movies, loading, error }: any) {
                     {movie.title}
                   </span>
                   <span
+                    className="pop-score"
                     style={{
                       color: "#ffd84d",
                       fontSize: "13px",

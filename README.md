@@ -2,6 +2,8 @@
 
 # 🎬 Movie Intelligence Hub: AI-Driven Pipeline & Business Analytics
 
+![CI - Pipeline Validation](https://github.com/mvinis/movies-analytics/actions/workflows/ci.yml/badge.svg)
+
 ---
 
 Este projeto implementa uma arquitetura de Data Lakehouse de ponta a ponta, integrada a um motor de Inteligência Artificial Híbrida. A solução extrai dados globais do mercado cinematográfico, aplica transformações colunares de alta performance e utiliza modelos de linguagem (LLMs) para gerar análises estratégicas sobre ROI, saturação de mercado e janelas de oportunidade, entregando tudo em um dashboard analítico reativo.
