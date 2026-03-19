@@ -20,8 +20,6 @@ export function Pipeline() {
   const [showModal, setShowModal] = useState(false);
   const itemsPerPage = 10;
 
-  const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
-
   // 1. Função de busca de logs (Histórico)
   const fetchLogs = async () => {
     try {
